@@ -8,6 +8,8 @@ If you enjoy the plug-in, feel free to [buy me coffee](https://www.paypal.com/do
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZEJ4UZGGSM9Q8&source=url)
 
+ ![Screen Capture](Content/screen-capture1.jpg)
+
 ## Features
 - Use any of the **voices included in Cognitive Services** (including the more human sounding **"neural" voices**)
 - Native support for **international languages** (provided by Microsoft Cognitive Services)
@@ -48,9 +50,7 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
    - Ensure the "Wait for the plug-in function to finish before continuing" is enabled
    - Save the command then execute it.  You should hear the text spoken out loud in the voice you selected if it's working.  If not, see the Troubleshooting section below.
 
-**Note**: the plug-in is pre-configured to save (cache) the generated audio files into the Voice Attach/Sounds/MSCognitiveTextToSpeech folder.  You can disable this or change the location in the "Voice Attach/Apps/MSCognitiveTextToSpeech/MSCognitiveTextToSpeech.dll.config" file
-
-
+>**Note**: the plug-in is pre-configured to save (cache) the generated audio files into the Voice Attach/Sounds/MSCognitiveTextToSpeech folder.  You can disable this or change the location in the "Voice Attach/Apps/MSCognitiveTextToSpeech/MSCognitiveTextToSpeech.dll.config" file
 
 ## FAQ
 
@@ -79,7 +79,7 @@ It's completely optional and really only needed if you want to go deeper into ho
   - [Simple Editor](https://speech.microsoft.com/audiocontentcreation)
   - [Advanced Editor](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
 
-**Note**: *the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the lug-in will be placed inside the \<voice\> tag.*
+>**Note**: the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the lug-in will be placed inside the \<voice\> tag.
 
 #### Can I use Voice Attach Tokens in the Context field?
 Absolutely.  Just like in other places, Voice Attack will process the tokens before it gets to the plug-in.  The resulting text is what gets sent off for the speech generation. 
