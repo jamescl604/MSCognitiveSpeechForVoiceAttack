@@ -39,7 +39,7 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
 1. Create a free [Azure user account](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) if you don't have one
 2. Setup a [Speech Service subcription](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) in your account (free tier)
 3. Get the **Subscription Key** and **Region** for your Speech subscription
-4. Download the latest release of the plug-in (zip file)
+4. Download the [latest release](https://github.com/jamescl604/MSCognitiveSpeechForVoiceAttack/releases) of the plug-in (zip file)
 5. Open/extract the zip file, copy the **MSCognitiveTextToSpeech** folder to your Voice Attack "apps" folder (i.e. Voice Attack/apps/MSCognitiveTextToSpeech/)
 6. Edit the settings in the **MSCognitiveTextToSpeech.dll.config** file (i.e. voice, language, caching, radio effect, etc.) 
 7. Add your Speech Service Subscription Key to the **private.config** file
