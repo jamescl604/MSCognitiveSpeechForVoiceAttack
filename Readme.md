@@ -13,7 +13,7 @@ If you enjoy the plug-in, feel free to [buy me coffee](https://www.paypal.com/do
 ## Features
 - Use any of the **voices included in Cognitive Services** (including the more human sounding **"neural" voices**)
 - Native support for **international languages** (provided by Microsoft Cognitive Services)
-- (Optional) Add a **"Radio" effect** so spoken text sounds like its coming over a radio (ideal for plane/combat time simulations)
+- (Optional) Add a **"Radio" effect** so spoken text sounds like its coming over a radio (ideal for plane/combat type simulations)
 - (Optional) Ability to use **SSML** for fine-control of how the speech is synthesized 
 - (Optional) Ability to **cache synthesized audio** outputs locally to avoid additional service calls
 - Automatic clean up of cached files (configurable expiration period)
