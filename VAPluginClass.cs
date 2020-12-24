@@ -73,7 +73,7 @@ namespace MSCognitiveTextToSpeech
             // look for old sound files we can delete
             PruneCacheDirectory(vaProxy);
 
-            if (!SupportedProfile(vaProxy)) return;
+            //if (!SupportedProfile(vaProxy)) return;
 
         }
 
@@ -93,7 +93,7 @@ namespace MSCognitiveTextToSpeech
             string context;
 
             // see if we should run for this profile
-            if (!SupportedProfile(vaProxy)) return;
+            //if (!SupportedProfile(vaProxy)) return;
 
             // abort if we have nothing to synthesize
             if (String.IsNullOrEmpty(vaProxy.Context))
