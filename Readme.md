@@ -36,8 +36,8 @@ Other people and work that inspired and help me accomplish this project:
 
 I'll work on creating a Youtube video that runs through this, in the meantime, here are the steps:
 
-1. Create a free [Azure user account](url:https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) if you don't have one
-2. Setup a [Speech Service subcription](url:https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) in your account (free tier)
+1. Create a free [Azure user account](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) if you don't have one
+2. Setup a [Speech Service subcription](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) in your account (free tier)
 3. Get the **Subscription Key** and **Region** for your Speech subscription
 4. Download the latest release of the plug-in (zip file)
 5. Open/extract the zip file, copy the **MSCognitiveTextToSpeech** folder to your Voice Attack "apps" folder (i.e. Voice Attack/apps/MSCognitiveTextToSpeech/)
