@@ -57,7 +57,7 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
 #### Is this free?  Are there any costs?
 - The plug-in is completely free to use.  
 - Voice Attack has a free and a paid option ([details](https://voiceattack.com/purchase.aspx)) Paid is typically only $10 USD.   
-- Cognitive Services supports 5 million characters for standard voices and 0.5 million characters for neural voices in the **free tier**.  This should be plenty for most people especially with the way the plug-in caches speech for text phrases it's previously done.   More details on can be [found here](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)  
+- Cognitive Services supports 5 million characters for standard voices and 0.5 million characters for neural voices in the **free tier**.  This should be plenty for most people especially with the way the plug-in caches speech for text phrases it's previously done.   [More details can be found here](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)  
 
 #### Are you tracking usage or anything else with the plug-in?
 No.  Anything you run through plug-in is only seen by Cognitive Services (for the text-to-speech operation) and that is within the bounds of your own account.  
