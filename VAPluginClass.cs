@@ -10,6 +10,7 @@ using System;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.CognitiveServices.Speech;
@@ -104,6 +105,11 @@ namespace MSCognitiveTextToSpeech
             else
                 context = vaProxy.Context;
 
+            // since the context could contain dynamic tokens/phrases, we need to extract one
+            string[] possiblePhrases = vaProxy.Utility.ExtractPhrases(context);
+            string selectedPhrase = possiblePhrases.ToList().PickRandom();
+   
+
             // see if we have a valid configuration file
             Configuration config = new Configuration();
             if (!config.Exists() && config.SettingCount == 0)
@@ -114,7 +120,7 @@ namespace MSCognitiveTextToSpeech
 
             // proceed with the text-to-speech process
             if (DebugMode(vaProxy)) vaProxy.WriteToLog(LOG_PREFIX + "Processing context: " + context, LOG_INFO);
-            await InvokeTextToSpeech(vaProxy, context);
+            await InvokeTextToSpeech(vaProxy, selectedPhrase);
             
             // if we get this far we've processed the command
             vaProxy.WriteToLog(LOG_PREFIX + "Context processed: " + context, LOG_NORMAL);
