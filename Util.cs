@@ -2,11 +2,19 @@
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 namespace MSCognitiveTextToSpeech
 {
-    public class Utils
+    public static class Utils
     {
+       
+        public static T PickRandom<T>(this List<T> enumerable)
+        {
+            int index = new Random().Next(0, enumerable.Count);
+            return enumerable[index];
+        }
+       
 
         public static string GetHashedName(MemoryStream ms)
         {
