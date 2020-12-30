@@ -66,13 +66,13 @@ No.  Anything you run through plug-in is only seen by Cognitive Services (for th
 Nope, nada, but if you enjoy it, feel free to [buy me coffee](https://www.paypal.com/donate?hosted_button_id=ZEJ4UZGGSM9Q8) :)
 
 #### What is the caching based on?
-It's based on the SSML xml message sent to the speech service.  When you change what's in the Content field for the call to the plug-in OR the Voice Name or Voice Language fields in the config, an new wav file will get saved/cached.
+It's based on the SSML xml message sent to the speech service.  When you change what's in the Context field for the call to the plug-in OR the Voice Name or Voice Language fields in the config, a new wav file will get saved/cached.
 
 #### How is the cache managed?
-Each time Voice Attach is started, the plug-in loads and it deletes any files from the cache folder that haven't been accessed in the last 30 days (default).  You can change the number of days in the config file as well.
+Each time Voice Attack is started, the plug-in loads and it deletes any files from the cache folder that haven't been accessed in the last 30 days (default).  You can change the number of days in the config file as well.
 
 #### What is SSML?  How or why should I use it?
-It's completely optional and really only needed if you want to go deeper into how the precise your want the speech.  For example, some voices support emotion, or you can add pauses, inflections, improve pronouciation, etc.
+It's completely optional and really only needed if you want to go deeper into how precise you want the speech.  For example, some voices support emotion, or you can add pauses, inflections, improve pronouciation, etc.
 
 - [Micorosft documentation on the SSML syntax and capabilities](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup)
 - Microsoft's online Speech generation tools:
