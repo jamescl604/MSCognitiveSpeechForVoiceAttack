@@ -188,7 +188,14 @@ namespace MSCognitiveTextToSpeech
 
                 // Go synthesize the text.  Note: null needs to be passed for the audio config          
                 using var synthesizer = new SpeechSynthesizer(config, null);
-                using var result = await synthesizer.SpeakSsmlAsync(ssmlText);
+
+                // original version which does it asynchronously 
+                //using var result = await synthesizer.SpeakSsmlAsync(ssmlText);
+
+                // new version which does it synchronously 
+                using Task<SpeechSynthesisResult> task = Task.Run(() => synthesizer.SpeakSsmlAsync(ssmlText));
+                var result = task.Result;
+
                 if (result.Reason == ResultReason.SynthesizingAudioCompleted)
                 {
                     // cache/save the audio to a wav file if caching is enabled
