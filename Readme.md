@@ -21,7 +21,7 @@ If you enjoy the plug-in, feel free to [buy me coffee](https://www.paypal.com/do
 ## Dependencies
 
 - Azure Speech service subscription (free tier will work fine, especially with caching turned on)
-- Voice Attack **64-bit** (free or paid)
+- Voice Attack (free or paid)
   
 ## Who is this for?
 Mainly gamers and flight sim players who want the better speech capabilities for their Voice Attack commands.  I use it for Microsoft Flight Simulator 2020 to simulate having a co-pilot but you can use it for really anything where you want to a command to say something.
