@@ -316,7 +316,7 @@ namespace MSCognitiveTextToSpeech
         }
         private static int GetCacheDurationInDays(dynamic vaProxy)
         {
-            int? result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".CacheDurationInDays");
+            int? result = vaProxy.GetInt(VARIABLE_NAMESPACE + ".CacheDurationInDays");
             return result.HasValue ? (int)result : new Configuration().Setting<int>("CacheDurationInDays");
         }
         private static bool GetAddRadioEffect(dynamic vaProxy)
@@ -326,12 +326,12 @@ namespace MSCognitiveTextToSpeech
         }
         private static string GetAzureSubscriptionKey(dynamic vaProxy)
         {
-            string result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AzureSubscriptionKey");
+            string result = vaProxy.GetText(VARIABLE_NAMESPACE + ".AzureSubscriptionKey");
             return !String.IsNullOrWhiteSpace(result) ? result : new Configuration().Setting<string>("AzureSubscriptionKey");
         }
         private static string GetAzureRegion(dynamic vaProxy)
         {
-            string result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AzureRegion");
+            string result = vaProxy.GetText(VARIABLE_NAMESPACE + ".AzureRegion");
             return !String.IsNullOrWhiteSpace(result) ? result : new Configuration().Setting<string>("AzureRegion");
         }
       
