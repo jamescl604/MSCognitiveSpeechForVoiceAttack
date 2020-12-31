@@ -34,7 +34,7 @@ namespace MSCognitiveTextToSpeech
         /// </summary>
         public static string VA_DisplayName()
         {
-            return "MSCognitiveTextToSpeech - v1.0";  
+            return String.Concat("MSCognitiveTextToSpeech - ", Utils.GetPluginVersion());
         }
 
         /// <summary>

@@ -3,12 +3,18 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace MSCognitiveTextToSpeech
 {
     public static class Utils
     {
        
+        public static string GetPluginVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
         public static T PickRandom<T>(this List<T> enumerable)
         {
             int index = new Random().Next(0, enumerable.Count);

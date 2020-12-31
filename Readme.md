@@ -41,16 +41,17 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
 3. Get the **Subscription Key** and **Region** for your Speech subscription
 4. Download the [latest release](https://github.com/jamescl604/MSCognitiveSpeechForVoiceAttack/releases) of the plug-in (zip file)
 5. Open/extract the zip file, copy the **MSCognitiveTextToSpeech** folder to your Voice Attack "apps" folder (i.e. Voice Attack/apps/MSCognitiveTextToSpeech/)
-6. Edit the settings in the **MSCognitiveTextToSpeech.dll.config** file (i.e. voice, language, caching, radio effect, etc.) 
-7. Add your Speech Service Subscription Key to the **private.config** file
-8. In Voice Attack, go Options (wrench icon) > General >  ensure "**Enable Plug-in Support**" is enabled
-9. **Run a test** :
+6. Edit the settings in the **MSCognitiveTextToSpeech.dll.config** file  
+     - Modify AzureSubscriptionKey and AzureRegion settings
+     - Review and modify any of the other settings if you don't like the defaults
+7. In Voice Attack, go Options (wrench icon) > General >  ensure "**Enable Plug-in Support**" is enabled
+8. **Run a test** :
    - Add a command that calls the plug-in (under the Other > Advanced > Execute an External Plugin Function)
    - Set the "Context" field to the text your want to be spoken (it also supports tokens)
    - Ensure the "Wait for the plug-in function to finish before continuing" is enabled
    - Save the command then execute it.  You should hear the text spoken out loud in the voice you selected if it's working.  If not, see the Troubleshooting section below.
 
->**Note**: the plug-in is pre-configured to save (cache) the generated audio files into the Voice Attach/Sounds/MSCognitiveTextToSpeech folder.  You can disable this or change the location in the "Voice Attach/Apps/MSCognitiveTextToSpeech/MSCognitiveTextToSpeech.dll.config" file
+>**Note**: the plug-in is pre-configured to save (cache) the generated audio files into the Voice Attack/Sounds/MSCognitiveTextToSpeech folder.  You can disable this or change the location in the "Voice Attack/Apps/MSCognitiveTextToSpeech/MSCognitiveTextToSpeech.dll.config" file
 
 ## FAQ
 
@@ -75,9 +76,7 @@ Each time Voice Attack is started, the plug-in loads and it deletes any files fr
 It's completely optional and really only needed if you want to go deeper into how precise you want the speech.  For example, some voices support emotion, or you can add pauses, inflections, improve pronouciation, etc.
 
 - [Micorosft documentation on the SSML syntax and capabilities](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup)
-- Microsoft's online Speech generation tools:
-  - [Simple Editor](https://speech.microsoft.com/audiocontentcreation)
-  - [Advanced Editor](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
+- Microsoft's online Speech generation tools: [Simple Editor](https://speech.microsoft.com/audiocontentcreation) | [Advanced Editor](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
 
 >**Note**: the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the plug-in will be placed inside the \<voice\> tag.
 
@@ -86,4 +85,9 @@ Absolutely.  Just like in other places, Voice Attack will process the tokens bef
 
 ## Troubleshooting
 
-I need to add some stuff here.  In the meantime, use the Issues tab to ask questions/get help.
+If the following doesn't help, post an issue or question on the Issues page.
+
+#### The plug-in isn't showing up in Voice Attack after being installed
+
+Make sure you're using the version of the plug-in that matches you Voice Attack install (i.e. x86 plug-in if you'zre using 32-bit Voice Attack (most people).  Use the x64 plug-in if the Options window title in Voice Attack says "64-bit")
+
