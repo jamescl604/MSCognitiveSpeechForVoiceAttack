@@ -21,7 +21,7 @@ If you enjoy the plug-in, feel free to [buy me coffee](https://www.paypal.com/do
 ## Dependencies
 
 - Azure Speech service subscription (free tier will work fine, especially with caching turned on)
-- Voice Attack **64-bit** (free or paid)
+- Voice Attack (free or paid)
   
 ## Who is this for?
 Mainly gamers and flight sim players who want the better speech capabilities for their Voice Attack commands.  I use it for Microsoft Flight Simulator 2020 to simulate having a co-pilot but you can use it for really anything where you want to a command to say something.
@@ -41,16 +41,17 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
 3. Get the **Subscription Key** and **Region** for your Speech subscription
 4. Download the latest release of the plug-in (zip file)
 5. Open/extract the zip file, copy the **MSCognitiveTextToSpeech** folder to your Voice Attack "apps" folder (i.e. Voice Attack/apps/MSCognitiveTextToSpeech/)
-6. Edit the settings in the **MSCognitiveTextToSpeech.dll.config** file (i.e. voice, language, caching, radio effect, etc.) 
-7. Add your Speech Service Subscription Key to the **private.config** file
-8. In Voice Attack, go Options (wrench icon) > General >  ensure "**Enable Plug-in Support**" is enabled
-9. **Run a test** :
+6. Edit the settings in the **MSCognitiveTextToSpeech.dll.config** file  
+     - Modify AzureSubscriptionKey and AzureRegion settings
+     - Review and modify any of the other settings if you don't like the defaults
+7. In Voice Attack, go Options (wrench icon) > General >  ensure "**Enable Plug-in Support**" is enabled
+8. **Run a test** :
    - Add a command that calls the plug-in (under the Other > Advanced > Execute an External Plugin Function)
    - Set the "Context" field to the text your want to be spoken (it also supports tokens)
    - Ensure the "Wait for the plug-in function to finish before continuing" is enabled
    - Save the command then execute it.  You should hear the text spoken out loud in the voice you selected if it's working.  If not, see the Troubleshooting section below.
 
->**Note**: the plug-in is pre-configured to save (cache) the generated audio files into the Voice Attach/Sounds/MSCognitiveTextToSpeech folder.  You can disable this or change the location in the "Voice Attach/Apps/MSCognitiveTextToSpeech/MSCognitiveTextToSpeech.dll.config" file
+>**Note**: the plug-in is pre-configured to save (cache) the generated audio files into the Voice Attack/Sounds/MSCognitiveTextToSpeech folder.  You can disable this or change the location in the "Voice Attack/Apps/MSCognitiveTextToSpeech/MSCognitiveTextToSpeech.dll.config" file
 
 ## FAQ
 
@@ -69,21 +70,24 @@ Nope, nada, but if you enjoy it, feel free to [buy me coffee](https://www.paypal
 It's based on the SSML xml message sent to the speech service.  When you change what's in the Content field for the call to the plug-in OR the Voice Name or Voice Language fields in the config, an new wav file will get saved/cached.
 
 #### How is the cache managed?
-Each time Voice Attach is started, the plug-in loads and it deletes any files from the cache folder that haven't been accessed in the last 30 days (default).  You can change the number of days in the config file as well.
+Each time Voice Attack is started, the plug-in loads and it deletes any files from the cache folder that haven't been accessed in the last 30 days (default).  You can change the number of days in the config file as well.
 
 #### What is SSML?  How or why should I use it?
 It's completely optional and really only needed if you want to go deeper into how the precise your want the speech.  For example, some voices support emotion, or you can add pauses, inflections, improve pronouciation, etc.
 
 - [Micorosft documentation on the SSML syntax and capabilities](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup)
-- Microsoft's online Speech generation tools:
-  - [Simple Editor](https://speech.microsoft.com/audiocontentcreation)
-  - [Advanced Editor](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
+- Microsoft's online Speech generation tools: [Simple Editor](https://speech.microsoft.com/audiocontentcreation) | [Advanced Editor](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
 
 >**Note**: the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the lug-in will be placed inside the \<voice\> tag.
 
-#### Can I use Voice Attach Tokens in the Context field?
+#### Can I use Voice Attack Tokens in the Context field?
 Absolutely.  Just like in other places, Voice Attack will process the tokens before it gets to the plug-in.  The resulting text is what gets sent off for the speech generation. 
 
 ## Troubleshooting
 
-I need to add some stuff here.  In the meantime, use the Issues tab to ask questions/get help.
+If the following doesn't help, post an issue or question on the Issues page.
+
+#### The plug-in isn't showing up in Voice Attack after being installed
+
+Make sure you're using the version of the plug-in that matches you Voice Attack install (i.e. x86 plug-in if you'zre using 32-bit Voice Attack (most people).  Use the x64 plug-in if the Options window title in Voice Attack says "64-bit")
+
