@@ -74,6 +74,9 @@ namespace MSCognitiveTextToSpeech
             // look for old sound files we can delete
             PruneCacheDirectory(vaProxy);
 
+            // set a variable that allows profiles to check if the plug-in exists and is active
+            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", true);
+
             //if (!SupportedProfile(vaProxy)) return;
 
         }
@@ -83,7 +86,8 @@ namespace MSCognitiveTextToSpeech
         /// </summary>
         public static void VA_Exit1(dynamic vaProxy)
         {
-            // no clean up needed
+            // this probably is unnecessary but including just in case
+            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", false);
         }
 
         /// <summary>
@@ -92,6 +96,10 @@ namespace MSCognitiveTextToSpeech
         public static async Task VA_Invoke1(dynamic vaProxy)
         {
             string context;
+
+            // set a variable that allows profiles to check if the plug-in exists and is active
+            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", true);
+
 
             // see if we should run for this profile
             //if (!SupportedProfile(vaProxy)) return;
@@ -192,6 +200,9 @@ namespace MSCognitiveTextToSpeech
                 // original version which does it asynchronously 
                 //using var result = await synthesizer.SpeakSsmlAsync(ssmlText);
 
+                // if configured, plays a soft tone to signal that speech service call is being made (useful in cases where the call can take some time to roundtrip)
+                if (GetAddSpeechServiceTone(vaProxy)) PlayTone();
+
                 // new version which does it synchronously 
                 using Task<SpeechSynthesisResult> task = Task.Run(() => synthesizer.SpeakSsmlAsync(ssmlText));
                 var result = task.Result;
@@ -237,11 +248,11 @@ namespace MSCognitiveTextToSpeech
             // the synthesized audio seems to have added dead silence at the end so we'll trim it off
             speechResultWavReader = TrimFromEnd(speechResultWavReader, TimeSpan.FromSeconds(.4));
 
-            // add radio effect if desired, then play the audio
+          // add radio effect if desired, then play the audio
             if (GetAddRadioEffect(vaProxy))
-                playAudio(AddRadioEffect(speechResultWavReader, vaProxy), true);
+                playAudio(AddRadioEffect(speechResultWavReader, vaProxy), vaProxy, true);
             else
-                playAudio(speechResultWavReader.ToSampleProvider());
+                playAudio(speechResultWavReader.ToSampleProvider(), vaProxy, true);
 
             speechResultWavReader.Close();
 
@@ -316,7 +327,7 @@ namespace MSCognitiveTextToSpeech
         }
         private static int GetCacheDurationInDays(dynamic vaProxy)
         {
-            int? result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".CacheDurationInDays");
+            int? result = vaProxy.GetInt(VARIABLE_NAMESPACE + ".CacheDurationInDays");
             return result.HasValue ? (int)result : new Configuration().Setting<int>("CacheDurationInDays");
         }
         private static bool GetAddRadioEffect(dynamic vaProxy)
@@ -326,22 +337,37 @@ namespace MSCognitiveTextToSpeech
         }
         private static string GetAzureSubscriptionKey(dynamic vaProxy)
         {
-            string result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AzureSubscriptionKey");
+            string result = vaProxy.GetText(VARIABLE_NAMESPACE + ".AzureSubscriptionKey");
             return !String.IsNullOrWhiteSpace(result) ? result : new Configuration().Setting<string>("AzureSubscriptionKey");
         }
         private static string GetAzureRegion(dynamic vaProxy)
         {
-            string result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AzureRegion");
+            string result = vaProxy.GetText(VARIABLE_NAMESPACE + ".AzureRegion");
             return !String.IsNullOrWhiteSpace(result) ? result : new Configuration().Setting<string>("AzureRegion");
         }
-      
+        private static bool GetAddSpeechServiceTone(dynamic vaProxy)
+
+        {
+            bool? result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AddSpeechServiceTone");
+            return result.HasValue ? (bool)result : new Configuration().Setting<bool>("AddSpeechServiceTone");
+        }
+        private static int GetVolumeLevel(dynamic vaProxy)
+        {
+            int? result = vaProxy.GetInt(VARIABLE_NAMESPACE + ".VolumeLevel");
+            return result.HasValue ? (int)result : new Configuration().Setting<int>("VolumeLevel");
+        }
+
+
         /// <summary>
         /// Handles playing the speech audio to the default audio device
-        /// </summary>
-        public static void playAudio(ISampleProvider audio, bool waitUntilFinished = true)
+        /// </summary>               
+        public static void playAudio(ISampleProvider audio, dynamic vaProxy, bool waitUntilFinished = true)
         {
             using var player = new WaveOutEvent();
-            player.Init(audio);
+
+            int volumeLevel = GetVolumeLevel(vaProxy);
+
+            player.Init(AdjustVolume(audio, volumeLevel));
             player.Play();
 
 
@@ -517,9 +543,6 @@ namespace MSCognitiveTextToSpeech
             distortionEffect.Edge = 10;
             //distortionEffect.Gain = -6;
 
-            //var volumeSampleProvider = new NAudio.Wave.SampleProviders.VolumeSampleProvider(distortedStream.ToSampleProvider());
-            //volumeSampleProvider.Volume = 0.1f;
-
             var bands = new EqualizerBand[]
             {
                     new EqualizerBand {Bandwidth =0.4f, Frequency = 100, Gain = -20},
@@ -553,6 +576,26 @@ namespace MSCognitiveTextToSpeech
                 return equalizedStream;
             }            
 
+        }
+
+        /// <summary>
+        /// Adjusts the volume of the sample (100 means no change)
+        /// </summary>
+        public static ISampleProvider AdjustVolume(ISampleProvider source, int level = 100)
+        {            
+            var volumeSampleProvider = new NAudio.Wave.SampleProviders.VolumeSampleProvider(source);
+            volumeSampleProvider.Volume = level / 100f;
+
+            return volumeSampleProvider;
+        }
+
+        /// <summary>
+        /// Plays a subtle tone
+        /// </summary>
+        public static void PlayTone()
+        {            
+            var reader = new WaveFileReader(Properties.Resources.tone);            
+            playAudio(reader.ToSampleProvider(), true);
         }
 
         /// <summary>

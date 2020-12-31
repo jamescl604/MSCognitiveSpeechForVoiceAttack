@@ -144,6 +144,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Content\screen-capture1.jpg" />
+    <None Include="Resources\tone.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
