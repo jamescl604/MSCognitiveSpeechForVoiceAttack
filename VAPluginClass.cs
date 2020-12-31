@@ -248,11 +248,11 @@ namespace MSCognitiveTextToSpeech
             // the synthesized audio seems to have added dead silence at the end so we'll trim it off
             speechResultWavReader = TrimFromEnd(speechResultWavReader, TimeSpan.FromSeconds(.4));
 
-            // add radio effect if desired, then play the audio
+          // add radio effect if desired, then play the audio
             if (GetAddRadioEffect(vaProxy))
-                playAudio(AddRadioEffect(speechResultWavReader, vaProxy), true);
+                playAudio(AddRadioEffect(speechResultWavReader, vaProxy), vaProxy, true);
             else
-                playAudio(speechResultWavReader.ToSampleProvider());
+                playAudio(speechResultWavReader.ToSampleProvider(), vaProxy, true);
 
             speechResultWavReader.Close();
 
@@ -351,13 +351,23 @@ namespace MSCognitiveTextToSpeech
             bool? result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AddSpeechServiceTone");
             return result.HasValue ? (bool)result : new Configuration().Setting<bool>("AddSpeechServiceTone");
         }
+        private static int GetVolumeLevel(dynamic vaProxy)
+        {
+            int? result = vaProxy.GetInt(VARIABLE_NAMESPACE + ".VolumeLevel");
+            return result.HasValue ? (int)result : new Configuration().Setting<int>("VolumeLevel");
+        }
+
+
         /// <summary>
         /// Handles playing the speech audio to the default audio device
-        /// </summary>
-        public static void playAudio(ISampleProvider audio, bool waitUntilFinished = true)
+        /// </summary>               
+        public static void playAudio(ISampleProvider audio, dynamic vaProxy, bool waitUntilFinished = true)
         {
             using var player = new WaveOutEvent();
-            player.Init(audio);
+
+            int volumeLevel = GetVolumeLevel(vaProxy);
+
+            player.Init(AdjustVolume(audio, volumeLevel));
             player.Play();
 
 
@@ -533,9 +543,6 @@ namespace MSCognitiveTextToSpeech
             distortionEffect.Edge = 10;
             //distortionEffect.Gain = -6;
 
-            //var volumeSampleProvider = new NAudio.Wave.SampleProviders.VolumeSampleProvider(distortedStream.ToSampleProvider());
-            //volumeSampleProvider.Volume = 0.1f;
-
             var bands = new EqualizerBand[]
             {
                     new EqualizerBand {Bandwidth =0.4f, Frequency = 100, Gain = -20},
@@ -569,6 +576,17 @@ namespace MSCognitiveTextToSpeech
                 return equalizedStream;
             }            
 
+        }
+
+        /// <summary>
+        /// Adjusts the volume of the sample (100 means no change)
+        /// </summary>
+        public static ISampleProvider AdjustVolume(ISampleProvider source, int level = 100)
+        {            
+            var volumeSampleProvider = new NAudio.Wave.SampleProviders.VolumeSampleProvider(source);
+            volumeSampleProvider.Volume = level / 100f;
+
+            return volumeSampleProvider;
         }
 
         /// <summary>
