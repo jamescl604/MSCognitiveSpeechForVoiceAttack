@@ -200,6 +200,9 @@ namespace MSCognitiveTextToSpeech
                 // original version which does it asynchronously 
                 //using var result = await synthesizer.SpeakSsmlAsync(ssmlText);
 
+                // if configured, plays a soft tone to signal that speech service call is being made (useful in cases where the call can take some time to roundtrip)
+                if (GetAddSpeechServiceTone(vaProxy)) PlayTone();
+
                 // new version which does it synchronously 
                 using Task<SpeechSynthesisResult> task = Task.Run(() => synthesizer.SpeakSsmlAsync(ssmlText));
                 var result = task.Result;
@@ -342,7 +345,12 @@ namespace MSCognitiveTextToSpeech
             string result = vaProxy.GetText(VARIABLE_NAMESPACE + ".AzureRegion");
             return !String.IsNullOrWhiteSpace(result) ? result : new Configuration().Setting<string>("AzureRegion");
         }
-      
+        private static bool GetAddSpeechServiceTone(dynamic vaProxy)
+
+        {
+            bool? result = vaProxy.GetBoolean(VARIABLE_NAMESPACE + ".AddSpeechServiceTone");
+            return result.HasValue ? (bool)result : new Configuration().Setting<bool>("AddSpeechServiceTone");
+        }
         /// <summary>
         /// Handles playing the speech audio to the default audio device
         /// </summary>
@@ -561,6 +569,15 @@ namespace MSCognitiveTextToSpeech
                 return equalizedStream;
             }            
 
+        }
+
+        /// <summary>
+        /// Plays a subtle tone
+        /// </summary>
+        public static void PlayTone()
+        {            
+            var reader = new WaveFileReader(Properties.Resources.tone);            
+            playAudio(reader.ToSampleProvider(), true);
         }
 
         /// <summary>
