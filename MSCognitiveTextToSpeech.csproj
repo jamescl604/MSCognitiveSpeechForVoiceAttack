@@ -136,7 +136,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="private.config" />
     <None Include="Readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -148,9 +147,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /F /Q "$(TargetDir)$(ProjectName)*.zip"
+    <PostBuildEvent>del /F /Q "$(TargetDir)*.zip"
+mkdir "$(TargetDir)$(ProjectName)-$(PlatformName)"
+del /F /Q "$(TargetDir)$(ProjectName)-$(PlatformName)\*.*"
 xcopy /Y "$(TargetDir)*.*" "C:\Program Files (x86)\VoiceAttack\Apps\MSCognitiveTextToSpeech\"
-powershell  -ExecutionPolicy Bypass compress-archive -Path "$(TargetDir)*.*" -DestinationPath "$(TargetDir)$(ProjectName)-$(PlatformName).zip"</PostBuildEvent>
+xcopy /Y "$(TargetDir)*.*" "$(TargetDir)$(ProjectName)-$(PlatformName)"
+powershell  -ExecutionPolicy Bypass compress-archive -Path "$(TargetDir)$(ProjectName)-$(PlatformName)" -DestinationPath "$(TargetDir)$(ProjectName)-$(PlatformName).zip"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="packages\Microsoft.CognitiveServices.Speech.1.14.0\build\net461\Microsoft.CognitiveServices.Speech.targets" Condition="Exists('packages\Microsoft.CognitiveServices.Speech.1.14.0\build\net461\Microsoft.CognitiveServices.Speech.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
