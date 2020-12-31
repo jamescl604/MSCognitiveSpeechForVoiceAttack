@@ -74,6 +74,9 @@ namespace MSCognitiveTextToSpeech
             // look for old sound files we can delete
             PruneCacheDirectory(vaProxy);
 
+            // set a variable that allows profiles to check if the plug-in exists and is active
+            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", true);
+
             //if (!SupportedProfile(vaProxy)) return;
 
         }
@@ -83,7 +86,8 @@ namespace MSCognitiveTextToSpeech
         /// </summary>
         public static void VA_Exit1(dynamic vaProxy)
         {
-            // no clean up needed
+            // this probably is unnecessary but including just in case
+            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", false);
         }
 
         /// <summary>
@@ -92,6 +96,10 @@ namespace MSCognitiveTextToSpeech
         public static async Task VA_Invoke1(dynamic vaProxy)
         {
             string context;
+
+            // set a variable that allows profiles to check if the plug-in exists and is active
+            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", true);
+
 
             // see if we should run for this profile
             //if (!SupportedProfile(vaProxy)) return;

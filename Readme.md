@@ -17,6 +17,7 @@ If you enjoy the plug-in, feel free to [buy me coffee](https://www.paypal.com/do
 - (Optional) Ability to use **SSML** for fine-control of how the speech is synthesized 
 - (Optional) Ability to **cache synthesized audio** outputs locally to avoid additional service calls
 - Automatic clean up of cached files (configurable expiration period)
+- Ability to override config options by using Voice Attack variables (i.e. MSCognitiveTextToSpeech.DefaultVoiceName)
 
 ## Dependencies
 
@@ -81,7 +82,13 @@ It's completely optional and really only needed if you want to go deeper into ho
 >**Note**: the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the lug-in will be placed inside the \<voice\> tag.
 
 #### Can I use Voice Attack Tokens in the Context field?
-Absolutely.  Just like in other places, Voice Attack will process the tokens before it gets to the plug-in.  The resulting text is what gets sent off for the speech generation. 
+Absolutely.  Just like in other places, Voice Attack will process the tokens before it gets to the plug-in.  The resulting text is what gets sent off for the speech generation.  For example : **[Hi, Hello;Greetings] my friend** would randomly become one of the 3 variants : Hi my friend, Hello my friend, Greetings my friend.
+
+#### How can I change settings using variables (override the config file)?
+Each of the settings available in the config file can also be set using a Voice Attack variable.  The variables are the combination of the prefix **MSCognitiveTextToSpeech.** and the KeyName from the config file.  Examples: MSCognitiveTextToSpeech.DefaultVoiceName, MSCognitiveTextToSpeech.AddRadioEffect.  If the config and variable use different settings, the variable takes precedence.  
+
+>**Note**: the variables need to be the correct variable type (i.e settings that are true/false need to use "Set a Boolean type", anything that is a number should be an Int, Text should a Text type.)
+
 
 ## Troubleshooting
 
