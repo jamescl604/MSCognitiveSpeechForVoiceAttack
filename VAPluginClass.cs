@@ -86,8 +86,7 @@ namespace MSCognitiveTextToSpeech
         /// </summary>
         public static void VA_Exit1(dynamic vaProxy)
         {
-            // this probably is unnecessary but including just in case
-            vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", false);
+            // nothing to clean up
         }
 
         /// <summary>
@@ -96,6 +95,7 @@ namespace MSCognitiveTextToSpeech
         public static async Task VA_Invoke1(dynamic vaProxy)
         {
             string context;
+            Configuration config;
 
             // set a variable that allows profiles to check if the plug-in exists and is active
             vaProxy.SetBoolean(VARIABLE_NAMESPACE + ".Active", true);
@@ -116,10 +116,19 @@ namespace MSCognitiveTextToSpeech
             // since the context could contain dynamic tokens/phrases, we need to extract one
             string[] possiblePhrases = vaProxy.Utility.ExtractPhrases(context);
             string selectedPhrase = possiblePhrases.ToList().PickRandom();
-   
+
 
             // see if we have a valid configuration file
-            Configuration config = new Configuration();
+            try
+            {
+                config = new Configuration();
+            }
+            catch (Exception ex)
+            {
+                vaProxy.WriteToLog(LOG_PREFIX + "Config file is invalid. Msg: " + ex.Message, LOG_ERROR);
+                return;
+            }
+
             if (!config.Exists() && config.SettingCount == 0)
             {
                 vaProxy.WriteToLog(LOG_PREFIX + "Config file is missing or invalid. Location: " + config.Path, LOG_ERROR);
@@ -163,8 +172,6 @@ namespace MSCognitiveTextToSpeech
                 vaProxy.WriteToLog(LOG_PREFIX + "ApplyRadioEffect: " + GetAddRadioEffect(vaProxy).ToString(), LOG_INFO);
             }
 
-
-            //string msg = "This is a test message";
             string msg = message;
 
             XElement ssml = GenerateSSML(config, msg, vaProxy);
@@ -201,7 +208,7 @@ namespace MSCognitiveTextToSpeech
                 //using var result = await synthesizer.SpeakSsmlAsync(ssmlText);
 
                 // if configured, plays a soft tone to signal that speech service call is being made (useful in cases where the call can take some time to roundtrip)
-                if (GetAddSpeechServiceTone(vaProxy)) PlayTone();
+                if (GetAddSpeechServiceTone(vaProxy)) PlayTone(vaProxy);
 
                 // new version which does it synchronously 
                 using Task<SpeechSynthesisResult> task = Task.Run(() => synthesizer.SpeakSsmlAsync(ssmlText));
@@ -592,10 +599,10 @@ namespace MSCognitiveTextToSpeech
         /// <summary>
         /// Plays a subtle tone
         /// </summary>
-        public static void PlayTone()
+        public static void PlayTone(dynamic vaProxy)
         {            
             var reader = new WaveFileReader(Properties.Resources.tone);            
-            playAudio(reader.ToSampleProvider(), true);
+            playAudio(reader.ToSampleProvider(), vaProxy, true);
         }
 
         /// <summary>
