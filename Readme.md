@@ -35,8 +35,11 @@ Other people and work that inspired and help me accomplish this project:
   
 ## Setup
 
-I'll work on creating a Youtube video that runs through this, in the meantime, here are the steps:
+### YouTube
+This video goes over the install and setup steps below: 
+https://www.youtube.com/watch?v=DvJ8FcthEO8
 
+### Setup
 1. Create a free [Azure user account](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) if you don't have one
 2. Setup a [Speech Service subcription](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) in your account (free tier)
 3. Get the **Subscription Key** and **Region** for your Speech subscription
@@ -59,7 +62,12 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
 #### Is this free?  Are there any costs?
 - The plug-in is completely free to use.  
 - Voice Attack has a free and a paid option ([details](https://voiceattack.com/purchase.aspx)) Paid is typically only $10 USD.   
-- Cognitive Services supports 5 million characters for standard voices and 0.5 million characters for neural voices in the **free tier**.  This should be plenty for most people especially with the way the plug-in caches speech for phrases it's already processed.   [More details can be found here](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)  
+- Cognitive Services supports 5 million characters for standard voices and 0.5 million characters for neural voices in the **free tier**.  This should be plenty for most people especially with the way the plug-in caches speech for phrases it's already processed.   [More details can be found here](https://azure.
+- microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)  
+
+#### Are the free allowances enough?
+
+A typically gaming day for me will use 200 phrases.  If we assume each phrase is 100 characters (most are much shorter), that's 20,000 characters per gaming day.   If we gamed 20 days in the month, that would 400,000 characters total.  With caching enabled, the numbers of calls will be even less.  
 
 #### Are you tracking usage or anything else with the plug-in?
 No.  Anything you run through plug-in is only seen by Cognitive Services (for the text-to-speech operation) and that is within the bounds of your own account.  
