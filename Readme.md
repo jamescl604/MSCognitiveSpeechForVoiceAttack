@@ -13,7 +13,7 @@ If you enjoy the plug-in, feel free to [buy me coffee](https://www.paypal.com/do
 ## Features
 - Use any of the **voices included in Cognitive Services** (including the more human sounding **"neural" voices**)
 - Native support for **international languages** (provided by Microsoft Cognitive Services)
-- (Optional) Add a **"Radio" effect** so spoken text sounds like its coming over a radio (ideal for plane/combat time simulations)
+- (Optional) Add a **"Radio" effect** so spoken text sounds like its coming over a radio (ideal for plane/combat type simulations)
 - (Optional) Ability to use **SSML** for fine-control of how the speech is synthesized 
 - (Optional) Ability to **cache synthesized audio** outputs locally to avoid additional service calls
 - Automatic clean up of cached files (configurable expiration period)
@@ -35,12 +35,15 @@ Other people and work that inspired and help me accomplish this project:
   
 ## Setup
 
-I'll work on creating a Youtube video that runs through this, in the meantime, here are the steps:
+### YouTube
+This video goes over the install and setup steps below: 
+https://www.youtube.com/watch?v=DvJ8FcthEO8
 
-1. Create a free [Azure user account](url:https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) if you don't have one
-2. Setup a [Speech Service subcription](url:https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) in your account (free tier)
+### Setup
+1. Create a free [Azure user account](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) if you don't have one
+2. Setup a [Speech Service subcription](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview#try-the-speech-service-for-free) in your account (free tier)
 3. Get the **Subscription Key** and **Region** for your Speech subscription
-4. Download the latest release of the plug-in (zip file)
+4. Download the [latest release](https://github.com/jamescl604/MSCognitiveSpeechForVoiceAttack/releases) of the plug-in (zip file)
 5. Open/extract the zip file, copy the **MSCognitiveTextToSpeech** folder to your Voice Attack "apps" folder (i.e. Voice Attack/apps/MSCognitiveTextToSpeech/)
 6. Edit the settings in the **MSCognitiveTextToSpeech.dll.config** file  
      - Modify AzureSubscriptionKey and AzureRegion settings
@@ -59,7 +62,12 @@ I'll work on creating a Youtube video that runs through this, in the meantime, h
 #### Is this free?  Are there any costs?
 - The plug-in is completely free to use.  
 - Voice Attack has a free and a paid option ([details](https://voiceattack.com/purchase.aspx)) Paid is typically only $10 USD.   
-- Cognitive Services supports 5 million characters for standard voices and 0.5 million characters for neural voices in the **free tier**.  This should be plenty for most people especially with the way the plug-in caches speech for text phrases it's previously done.   More details on can be [found here](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)  
+- Cognitive Services supports 5 million characters for standard voices and 0.5 million characters for neural voices in the **free tier**.  This should be plenty for most people especially with the way the plug-in caches speech for phrases it's already processed.   [More details can be found here](https://azure.
+- microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)  
+
+#### Are the free allowances enough?
+
+A typically gaming day for me will use 200 phrases.  If we assume each phrase is 100 characters (most are much shorter), that's 20,000 characters per gaming day.   If we gamed 20 days in the month, that would 400,000 characters total.  With caching enabled, the numbers of calls will be even less.  
 
 #### Are you tracking usage or anything else with the plug-in?
 No.  Anything you run through plug-in is only seen by Cognitive Services (for the text-to-speech operation) and that is within the bounds of your own account.  
@@ -68,18 +76,18 @@ No.  Anything you run through plug-in is only seen by Cognitive Services (for th
 Nope, nada, but if you enjoy it, feel free to [buy me coffee](https://www.paypal.com/donate?hosted_button_id=ZEJ4UZGGSM9Q8) :)
 
 #### What is the caching based on?
-It's based on the SSML xml message sent to the speech service.  When you change what's in the Content field for the call to the plug-in OR the Voice Name or Voice Language fields in the config, an new wav file will get saved/cached.
+It's based on the SSML xml message sent to the speech service.  When you change what's in the Context field for the call to the plug-in OR the Voice Name or Voice Language fields in the config, a new wav file will get saved/cached.
 
 #### How is the cache managed?
 Each time Voice Attack is started, the plug-in loads and it deletes any files from the cache folder that haven't been accessed in the last 30 days (default).  You can change the number of days in the config file as well.
 
 #### What is SSML?  How or why should I use it?
-It's completely optional and really only needed if you want to go deeper into how the precise your want the speech.  For example, some voices support emotion, or you can add pauses, inflections, improve pronouciation, etc.
+It's completely optional and really only needed if you want to go deeper into how precise you want the speech.  For example, some voices support emotion, or you can add pauses, inflections, improve pronouciation, etc.
 
 - [Micorosft documentation on the SSML syntax and capabilities](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup)
 - Microsoft's online Speech generation tools: [Simple Editor](https://speech.microsoft.com/audiocontentcreation) | [Advanced Editor](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/)
 
->**Note**: the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the lug-in will be placed inside the \<voice\> tag.
+>**Note**: the plug-in generates the \<speech\> and \<voice\> tags.  Anything you put in the "Context" field on the call to the plug-in will be placed inside the \<voice\> tag.
 
 #### Can I use Voice Attack Tokens in the Context field?
 Absolutely.  Just like in other places, Voice Attack will process the tokens before it gets to the plug-in.  The resulting text is what gets sent off for the speech generation.  For example : **[Hi, Hello;Greetings] my friend** would randomly become one of the 3 variants : Hi my friend, Hello my friend, Greetings my friend.
